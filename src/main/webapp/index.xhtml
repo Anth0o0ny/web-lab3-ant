@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:composite="http://java.sun.com/jsf/composite">
+<f:view>
+    <h:head>
+        <h:outputStylesheet library="styles" name="index.css"/>
+        <title>LW3/StartPage</title>
+    </h:head>
+    <h:body>
+        <div id="outer">
+            <table id="layout">
+                <tr id="cap">
+                    <td>
+                        <div id="nameCap">
+                            Pushkin Anton. P32121. Option 212150
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div id="clock">
+                            Часы:
+                            <h:outputScript library="js" name="TimeDate.js"/>
+                        </div>
+                    </td>
+                </tr>
+                <tr id="buttonForm">
+                    <td>
+                        <div id="formButt">
+                            <h:form>
+                                <h:link styleClass="buttonToMain" value="Go to main page" outcome="mainPage"/>
+                            </h:form>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </h:body>
+</f:view>
+</html>

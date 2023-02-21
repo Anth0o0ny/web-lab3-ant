@@ -1,0 +1,75 @@
+#nameMainCap{
+    font-size: 34px;
+}
+#tableMain{
+    width: 100%;
+}
+
+body {
+    color: black;
+    background-color: goldenrod;
+    font-family: 'Courier New', monospace, bold;
+    text-align: center;
+}
+
+.backFromMain {
+    background-color: black;
+    color: goldenrod;
+    padding: 10px 15px;
+    font-family: 'Courier New', monospace, bold;
+    font-size: 25px;
+    box-shadow: 3px 3px 10px 2px black;
+}
+
+.mainActionButton {
+    background-color: black;
+    color: goldenrod;
+    padding: 10px 15px;
+    font-family: 'Courier New', monospace, bold;
+    font-size: 25px;
+    box-shadow: 3px 3px 10px 2px black;
+}
+
+
+#xSet {
+    display: flex;
+    justify-content: center;
+}
+
+#xSet > div {
+    margin-left: 3px;
+    margin-right: 3px;
+    width: 25px;
+}
+
+#xSet > div > input {
+    width: 100%;
+}
+
+.backFromMain:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.mainActionButton:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+
+#tableMain{
+    width: 100%;
+    height: 900px;
+}
+
+#resultTable {
+    display: flex;
+    justify-content: center;
+}
+
+#dataTable {
+    border: aliceblue;
+}
+
+#dataTable td {
+    width: 240px;
+}
+

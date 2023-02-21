@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+>
+
+<f:view>
+    <h:head>
+        <h:outputStylesheet library="styles" name="mainPage.css"/>
+        <title>LW3/MainPage</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"/>
+    </h:head>
+    <h:body>
+        <table id="tableMain">
+            <tr id="mainCap">
+                <td colspan="2">
+                    <div id="nameMainCap">
+                        Pushkin Anton. P32121. Option 212150
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <h:form id="mainForm">
+                    <td>
+                        <div>
+                            <div class="input-label">x coordinate:</div>
+                            <div id="xSet">
+                                <div><h:commandButton styleClass="x" value="-3"/></div>
+                                <div><h:commandButton styleClass="x" value="-2"/></div>
+                                <div><h:commandButton styleClass="x" value="-1"/></div>
+                                <div><h:commandButton styleClass="x" value="0"/></div>
+                                <div><h:commandButton styleClass="x" value="1"/></div>
+                                <div><h:commandButton styleClass="x" value="2"/></div>
+                                <div><h:commandButton styleClass="x" value="3"/></div>
+                                <div><h:commandButton styleClass="x" value="4"/></div>
+                                <div><h:commandButton styleClass="x" value="5"/></div>
+                                <h:inputText id="hiddenX" type="hidden" class="hidden_x" style="display: none" name="x" value = "#{appBean.hit.x}">
+                                    <f:validateRequired/>
+                                    <f:validateDoubleRange minimum="-3" maximum="5"/>
+                                </h:inputText>
+                            </div>
+                            <div id="xDivST">
+                                <!-- StackTrace for x coordinate -->
+                            </div>
+                        </div>
+                        <br/>
+                        <div>
+
+                        </div>
+                        <br/>
+
+                        <div>
+
+
+                            <div class="input-label">y coordinate:</div>
+                            <h:inputText id="y" style="color: darkgray" value="#{appBean.hit.yLine}" required="true"
+                                         validator="Validator"
+                                         requiredMessage="double: [-3;5]"
+                                         converterMessage="double: [-3;5]"
+                                         validatorMessage="double: [-3;5]">
+                                <f:validator validatorId="Validator"/>
+                                <f:ajax execute="@this" render="yStackTrace"/>
+                            </h:inputText>
+                            <div id="yDivST">
+                                <h:message id="yStackTrace" for="y"/>
+                            </div>
+                        </div>
+                        <br/>
+
+                        <div>
+
+                            <div class="input-label">r value:</div>
+                            <div id="rAce">
+                                <h:panelGrid style="height: 30px; width: 200px; margin-left: auto; margin-right: auto;">
+                                    <h:outputLabel id = "slider_val" for = "r" value = "Parameter R = 2"/>
+                                    <ace:sliderEntry id="r"  stepPercent="25" min="200" max="500"
+                                                     clickableRail="true" length="200px" value="#{appBean.hit.r}"/>
+                                </h:panelGrid>
+                            </div>
+                        </div>
+                        <br/>
+                        <div>
+                            <h:commandButton id="formButton" action="#{appBean.add}" styleClass="mainActionButton"
+                                             value="Check data">
+
+                                <f:ajax execute="mainForm" render="results" onevent="drawLastDot"/>
+
+                            </h:commandButton>
+                        </div>
+                        <br/>
+                    </td>
+                </h:form>
+
+                <td>
+
+                    <canvas id = "hit_area" width = "300" height = "300"/>
+                    <h:outputScript library="js" name="Graph.js"/>
+                    <h:outputScript library="js" name="Listening.js"/>
+                    <h:outputScript library="js" name="Validator.js"/>
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                        <h:link styleClass="backFromMain" value="Back to start page" outcome="startPage"/>
+                </td>
+                <td>
+                    <div>
+                        <h:form id = "clearingForm">
+                            <h:commandButton id = "clearingButton" action = "#{appBean.clear}" styleClass="mainActionButton"
+                                             value="Clear table">
+                                <f:ajax execute = "clearingForm" render = "results" onevent="clearCanvas"/>
+                            </h:commandButton>
+                        </h:form>
+                    </div>
+                </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div id="resultTable">
+                            <h:panelGroup id="results">
+
+                                <h:dataTable id="dataTable" value="#{appBean.hitList}" var="result">
+                                    <h:column>
+                                        <f:facet name="header">x</f:facet>
+                                        <h:outputText class="x_column" value="#{result.x}"/>
+                                    </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">y</f:facet>
+                                    <h:outputText class="y_column" value="#{result.y}"/>
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">r</f:facet>
+                                    <h:outputText class="r_column" value="#{result.r}"/>
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">succes</f:facet>
+                                    <h:outputText class="result_column" value="#{result.successLine}"/>
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">exec time</f:facet>
+                                    #{result.exTime}
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">cur time</f:facet>
+                                    #{result.date}
+                                </h:column>
+
+                            </h:dataTable>
+                            <h:form id = "hidden_form" style="display: none">
+                                <h:inputHidden id = "graphic_x_hidden" value = "#{appBean.hit.x}"/>
+                                <h:inputHidden id = "graphic_y_hidden" value = "#{appBean.hit.y}"/>
+                                <h:inputHidden id = "graphic_r_hidden" value = "#{appBean.hit.r}"/>
+                                <h:commandButton id = "graphic_button_hidden" action = "#{appBean.add}">
+                                    <f:ajax execute = "hidden_form" render = "results" onevent="drawLastDot()"/>
+                                </h:commandButton>
+                            </h:form>
+                        </h:panelGroup>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </h:body>
+</f:view>
+</html>
