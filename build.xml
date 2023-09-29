@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="web-lab3" default="compile">
+    <property file="build.properties"/>
+
+    <path id="lib.path">
+        <fileset dir="${lib.dir}" includes="**/*.jar"/>
+    </path>
+
+    <fileset dir="${src.test.dir}" includes="**/*Test*.java" id="src.test.path"/>
+
+
+    <target name="compile" description="Компиляция кода проекта">
+        <echo>Компиляция основного кода.</echo>
+        <property name="srcdir" value="${src.main.dir}"/>
+        <mkdir dir="${build.classes.dir}"/>
+        <javac srcdir="${srcdir}"
+               destdir="${build.classes.dir}"
+               includeantruntime="false">
+            <classpath refid="lib.path"/>
+        </javac>
+        <echo>Компиляция тестов...</echo>
+        <mkdir dir="${build.test.dir}"/>
+        <javac srcdir="${src.test.dir}"
+               destdir="${build.test.dir}"
+               includeantruntime="false">
+            <classpath>
+                <path refid="lib.path"/>
+                <pathelement location="${build.classes.dir}"/>
+            </classpath>
+        </javac>
+        <manifest file="${build.classes.dir}/MANIFEST.MF">
+            <attribute name="Manifest-Version" value="1.0"/>
+            <attribute name="Created-By" value="17.0.8 (Oracle Corporation)"/>
+        </manifest>
+    </target>
+
+    <target name="clean" description="Удаление скомпилированных файлов">
+        <echo>Удаление директории с классами...</echo>
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <target name="build" depends="compile" description="Упаковка файлов в jar-архив" >
+        <echo>Упаковка файлов в jar-архив</echo>
+        <jar destfile="${jar}" basedir="${build.classes.dir}" compress="false" index="true">
+        </jar>
+    </target>
+
+    <target name="test" depends="build" description="запуск junit-тестов проекта">
+        <mkdir dir="${build.test.report.dir}"/>
+        <junit printsummary="yes" fork="true" haltonfailure="no">
+            <classpath>
+                <pathelement location="${build.test.dir}"/>
+                <pathelement location="${build.classes.dir}"/>
+                <path refid="lib.path"/>
+            </classpath>
+            <formatter type="plain"/>
+            <batchtest fork="yes" todir="${build.test.report.dir}">
+                <fileset refid="src.test.path"/>
+            </batchtest>
+        </junit>
+    </target>
+    <target name="music" depends="build"   description="Воспроизведение музыки после сборки war-файла">
+        <sound>
+            <success source="${music.file.success}"/>
+            <fail source="${music.file.failure}"/>
+        </sound>
+        <antcall target="build"/>
+        <echo>Воспроизведение звукового файла...</echo>
+    </target>
+
+
+</project>
