@@ -5,12 +5,17 @@ import com.example.verify.Verifier;
 
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.inject.Named;
+import javax.enterprise.context.SessionScoped;
+
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
-
-@ManagedBean(name="appBean")
+/**
+ * Класс AppBean представляет собой управляемый бин, отвечающий за обработку данных о точках, введенных пользователем.
+ */
+@Named("appBean")
 @SessionScoped
 public class AppBean implements Serializable {
     /**
